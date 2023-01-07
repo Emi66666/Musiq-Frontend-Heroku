@@ -541,8 +541,8 @@
 
              let twitterBtn = document.getElementById("btn");
              twitterBtn.addEventListener('click', event => {
-                 location.href = "http://localhost:8080/user/twitterLogin";
-                  fetch(' https://musiq-backend.herokuapp.com/user/twitterLogin')
+                 location.href = 'https://musiq-backend.herokuapp.com/user/twitterLogin';
+                  fetch('https://musiq-backend.herokuapp.com/user/twitterLogin')
                       .then(res => {
                           return res.json();
                      })
