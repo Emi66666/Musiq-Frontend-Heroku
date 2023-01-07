@@ -61,7 +61,7 @@
                     <h3 class="section-subheading text-muted">
                         🎵 Find songs anywhere, anytime. 
                         🎵</h3>
-                    <a href="http://localhost:5501/stats.html"><h4 class="section-subheading text-muted"></h4>STATISTIKA</h4></a>
+                    <a href=" https://musiq-frontend.herokuapp.com/stats.html"><h4 class="section-subheading text-muted"></h4>STATISTIKA</h4></a>
                 </div>
                <div class="GoogleName"></div>
                 <div class="login twInfo">
@@ -70,6 +70,7 @@
                         Login with Twitter</p>
                      </a>   
                      <script src="https://accounts.google.com/gsi/client" async defer></script>
+                     <div class="topRight">
                      <div id="g_id_onload"
                           data-client_id="918397890491-m0j7bn0r8nglebao1qel1shnebfv4isc.apps.googleusercontent.com"
                           data-callback="onSignIn" >
@@ -77,7 +78,7 @@
                      <div class="g_id_signin" data-type="standard">
 
                      </div>
-
+                    </div>
                      <!-- <div id="fb-root"></div>
                     <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="true"></div> -->
                 </div>
@@ -90,6 +91,8 @@
                             <label for="popular">POPULAR</label><br>
                             <input type="radio" id="hot" name="search" value="hot" onclick="GetLikedSongs()">
                             <label for="hot">HOT</label><br>
+                            <input type="radio" id="liked" name="search" value="liked" onclick="GetLikedSongs()">
+                            <label for="liked" id="likedLabel">LIKED</label><br>
                             <input type="radio" id="recommended" name="search" value="recommended" onclick="GetLikedSongs()">
                             <label for="recommended" id="recommendedLabel">RECOMMENDED</label><br><br><br>
                           </form>
@@ -157,7 +160,7 @@
                 localStorage.setItem("name", googleIdName);
 
                 
-                fetch('http://localhost:8080/user/googleLogin', {
+                fetch(' https://musiq-backend.herokuapp.com/user/googleLogin', {
                     method: 'POST',
                     body: JSON.stringify({ 
                         "id": googleId.sub,
@@ -191,7 +194,7 @@
                             localStorage.removeItem("secret");
                             localStorage.removeItem("token");   
                             localStorage.removeItem("name");
-                            location.href = "http://localhost:5501/index.html"
+                            location.href = " https://musiq-frontend.herokuapp.com/index.html"
                          });
                          GetLikedSongs();
                       })
@@ -207,7 +210,7 @@
 
                 if(searchTerm) {
                     //                    fetch('http://localhost:8080/track/search?query='+searchTerm+"&searchType="+typeofsearch)
-                    fetch('http://localhost:8080/track/search?query='+searchTerm)
+                    fetch(' https://musiq-backend.herokuapp.com/track/search?query='+searchTerm)
                         .then(res => {
                              return res.json();
                             })
@@ -304,7 +307,7 @@
                 var UserLikedSongs;
                 var UserName;
                 function GetLikedSongs(){
-                    fetch('http://localhost:8080/user/'+localStorage.getItem('userId'))
+                    fetch(' https://musiq-backend.herokuapp.com/user/'+localStorage.getItem('userId'))
                         .then(res => {
                             return res.json();
                         })
@@ -336,7 +339,7 @@
                             localStorage.removeItem("secret");
                             localStorage.removeItem("token");
                             localStorage.removeItem("name");      
-                            location.href = "http://localhost:5501/index.html";
+                            location.href = " https://musiq-frontend.herokuapp.com/index.html";
                             });
                         }
                         else{
@@ -364,7 +367,7 @@
                                 localStorage.removeItem("secret");
                                 localStorage.removeItem("token");   
                                 localStorage.removeItem("name");
-                                location.href = "http://localhost:5501/index.html"
+                                location.href = " https://musiq-frontend.herokuapp.com/index.html"
                                 });
                         }
                     }
@@ -387,6 +390,8 @@
                 var popular = document.getElementById("popular");
                 var recommended = document.getElementById("recommended");
                 var recommendedLabel = document.getElementById("recommendedLabel");
+                var liked = document.getElementById("liked");
+                var likedLabel = document.getElementById("likedLabel");
                 var hot = document.getElementById("hot");
 
                 //check if sort type changed
@@ -399,6 +404,8 @@
                 else if(lastState == "hot" && hot.checked){
                     if(page==lastpage){RefreshSortType();}
                 }
+                else if(lastState == "liked" && liked.checked){
+                    if(page==lastpage){RefreshSortType();}}
                 else{
                     RefreshSortType();
                 }
@@ -407,6 +414,12 @@
                     recommended.style.pointerEvents = "none";
                 var sortType = "recommended";
                 lastState=sortType;
+                }
+
+                else if(liked.checked){
+                    liked.style.pointerEvents = "none";
+                    var sortType = "liked";
+                    lastState=sortType;
                 }
                 else if(popular.checked){
                     popular.style.pointerEvents = "none";
@@ -435,7 +448,7 @@
             console.log(sortType);
 
             //fetch('http://localhost:8080/track?page=0&count=20&sort='+sortType)            +'&secret='+localStorage.getItem('secret')
-            fetch('http://localhost:8080/track/'+sortType+'?page='+page+'&count=21&id='+localStorage.getItem('userId')+'&token='+localStorage.getItem('token') +'&secret='+localStorage.getItem('secret'))
+            fetch(' https://musiq-backend.herokuapp.com/track/'+sortType+'?page='+page+'&count=21&id='+localStorage.getItem('userId')+'&token='+localStorage.getItem('token') +'&secret='+localStorage.getItem('secret'))
                 .then(res => {
                     return res.json();
                 })
@@ -496,7 +509,7 @@
             function likeBtnClick(i, iC){
                 i.onclick = async function(){
                     
-					let likeLink = 'http://localhost:8080/track/'+i.name
+					let likeLink = ' https://musiq-backend.herokuapp.com/track/'+i.name
 					if (i.firstChild.style.color == 'red') {
 						likeLink += '/dislike'
 					} else {
@@ -525,8 +538,8 @@
 
              let twitterBtn = document.getElementById("btn");
              twitterBtn.addEventListener('click', event => {
-                 location.href = "http://localhost:8080/user/twitterLogin";
-                  fetch('http://localhost:8080/user/twitterLogin')
+                 location.href = " https://musiq-backend.herokuapp.com/user/twitterLogin";
+                  fetch(' https://musiq-backend.herokuapp.com/user/twitterLogin')
                       .then(res => {
                           return res.json();
                      })
@@ -578,10 +591,14 @@
                 if(!userLoggedIn){
                     recommended.style.display = 'none';
                     recommendedLabel.style.display = 'none';
+                    liked.style.display = 'none';
+                    likedLabel.style.display = 'none';
                 }
                 else{
                     recommended.style.display = "";
                     recommendedLabel.style.display = '';
+                    liked.style.display = '';
+                    likedLabel.style.display = '';
                 }
              }
 
