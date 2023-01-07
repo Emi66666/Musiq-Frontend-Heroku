@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>MUSIQ</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- <3 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+
+
+    <body id="page-top">
+        <!-- Portfolio Grid-->
+        <section class="page-section bg-light" id="portfolio">
+
+            <div class="container">
+                <div class="text-center">
+
+                    <h2 class="section-heading text-uppercase">MUSIQ
+                           </h2>
+                    <h3 class="section-subheading text-muted">
+                        🎵 Find songs anywhere, anytime. 
+                        🎵</h3>
+                    <a href="http://localhost:5501/index.html"><h4 class="section-subheading text-muted"></h4>SEARCH SONGS</h4></a><BR><BR><br>
+                </div>
+
+                
+
+                <div class="row"></div>
+               
+            </div>
+
+            
+        </section>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            const userId = params.get("userId");
+            const token = params.get("token");
+            const secret = params.get("secret");
+            
+            if (userId != null) {
+                localStorage.setItem("userId", userId);
+                localStorage.setItem("token", token);
+                localStorage.setItem("secret", secret);
+            }
+
+            fetch('http://localhost:8080/stats')
+                        .then(res => {
+                             return res.json();
+                            })
+                        .then(data => {
+                             data.forEach(stats => {
+                                console.log(stats);
+                        const markup = `<div class="col-lg-4 col-sm-6 mb-4"><div class="portfolio-item">
+                            <div class="portfolio-caption"><div class="portfolio-caption-heading">
+                            ${stats.name}
+                        </div><div class="portfolio-caption-subheading text-muted">
+                            ${stats.num} 
+                        </div>
+                    </div></div></div><br>                    
+                    `;
+                        document.querySelector('.row').insertAdjacentHTML('beforeend', markup);
+                    });
+                })
+                .catch(error => console.log(error));
+
+        </script>
+    </body>
+</html>
