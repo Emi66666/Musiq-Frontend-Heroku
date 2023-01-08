@@ -539,22 +539,6 @@
              let twitterBtn = document.getElementById("btn");
              twitterBtn.addEventListener('click', event => {
                  location.href = 'https://musiq-backend.herokuapp.com/user/twitterLogin';
-                  fetch('https://musiq-backend.herokuapp.com/user/twitterLogin')
-                      .then(res => {
-                          return res.json();
-                     })
-                      .then(data => {
-                          console.log(data);
-                      })
-                      .catch(error => console.log(error));
-                  fetch('https://api.twitter.com/oauth/request_token', {
-                      method: 'POST',
-                      body: JSON.stringify({ "oauth_callback": "https://developer.twitter.com/en/docs/authentication/guides/log-in-with-twitter" })
-                  })
-                  .then(red => {
-                      return res.json();
-                  })
-                 .then(res => console.log(JSON.stringify(res)))
              });
 
              function ChangeColor(i, iC) {
