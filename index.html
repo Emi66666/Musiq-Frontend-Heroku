@@ -499,12 +499,9 @@
                         icon.addEventListener('click', likeBtnClick(icon, iconColor));
                         })
                     });
-                    if(sortType != "liked"){
                     const markup2 = `<button style="font-size:24px" class="faH nextBtn" id="nextBtn${page}"  name="Next" onclick="NextPage()">
                         <i class=""  id="NextBtnI" color="black">MORE SONGS</i></button>`;
                     document.querySelector('.row').insertAdjacentHTML('beforeend', markup2);
-                    }
-
                 })
                 .catch(error => console.log(error));
             }
